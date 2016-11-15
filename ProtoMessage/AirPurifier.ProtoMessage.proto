@@ -1,0 +1,99 @@
+package AirPurifier;
+option cc_generic_services = true;
+option java_generic_services = true;
+option py_generic_services = true;
+
+ message ProtoMessage
+ {
+    //开关状态、运行模式、风速和定时时长信息
+    message Status
+    {
+      optional uint32 open = 1; //开关状态
+      optional uint32 mode = 2; //运行模式
+      optional uint32 wspd = 3; //风速档位
+      optional uint32 click = 4; //儿童锁
+      optional uint32 ermd = 5; //鼓掌提醒
+      optional uint32 time = 6; //定时剩余时间
+      optional uint32 ver = 7; //固件版本号
+      optional uint32 totm = 8; //累计工作时间
+      optional uint32 topur = 9; //累计净化量
+    }
+
+   	//传感器采样值
+   	message Sensor
+   	{
+      optional float hcho = 1; //甲醛浓度
+      optional float pm2p5 = 2; //PM2.5
+	    optional float temperature = 3; //温度
+   	  optional float humidity = 4; //湿度
+   	}
+
+    //异常和清洗提醒
+   	message Error
+   	{
+   	  optional uint32 fsc = 1; //初效过滤网清洗提示
+   	  optional uint32 ibc = 2; //离子箱清洗提示
+      optional uint32 ibe = 3; //离子箱故障提示
+   	  optional uint32 uve = 4; //UV灯故障提示
+   	}
+
+    optional uint64 devID = 1; //设备硬件编码
+    optional string date = 2; //YYYYMMDD格式，中间没有符号
+    optional string time = 3; //HHmmss格式，中间没有符号
+    optional Status status = 4;
+    optional Sensor sensor = 5;
+    optional Error error = 6;
+    optional uint32 messageType = 7;
+    /*
+      messageType 定义：
+      STATUS_MSG = 0x05,  //设备的状态信息，如开关、运行模式等
+      SENSOR_MSG = 0x06,  //传感器的监测值信息
+      ERR_MSG = 0x07  //设备错误提示和清洗信息，如UV灯、滤网清洗提示等
+    */
+}
+
+
+//这块MySQL的内容主要用于计算设备的总工作时间和空气净化总量
+message MySQLRequest
+{
+    //设备信息
+    message DeviceInfo
+    {
+      optional uint32 id = 1;
+      optional uint64 deviceId = 2; //设备唯一标识符
+      optional float totalPurifiedAir = 3;
+      optional float totalWordedTime = 4;
+    }
+
+    optional DeviceInfo deviceInfo = 1; //用于查询设备总工作时间和空气净化总量
+    optional string serverDateTime = 2; //服务器发送SQL请求的时间
+    optional uint32 messageCode = 3;
+    /*
+      messageCode 定义：
+      code = 0x01 查询设备总工作时间和空气净化总量
+      code = 0x02 修改设备总工作时间和空气净化总量
+    */
+}
+
+
+message MySQLResponse
+{
+    //设备信息
+    message DeviceInfo
+    {
+      optional uint32 id = 1;
+      optional uint64 deviceId = 2; //设备唯一标识符
+      optional float totalPurifiedAir = 3;
+      optional float totalWordedTime = 4;
+    }
+
+    optional uint32 status = 1; //对数据库的操作结果，1成功/0失败
+    optional string message = 2; //从数据库返回的信息
+    optional DeviceInfo deviceInfo = 3;
+}
+
+service MySQLService
+{
+  rpc updateDevice (MySQLRequest) returns (MySQLResponse);
+  rpc queryDevice (MySQLRequest) returns (MySQLResponse);
+}
