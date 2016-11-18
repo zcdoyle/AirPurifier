@@ -151,9 +151,16 @@ void TCPServer::clearConnectionInfo(const weak_ptr<TcpConnection> &weakConn)
 
 
         //clear map
+//        map<DEVID, TcpConnectionPtr>::iterator devToConnIt = devToConn_.find(id);
+//        if(devToConnIt != devToConn_.end())
+//            devToConn_.erase(devToConnIt);
+//        connHasDev_.erase(connIt);
         map<DEVID, TcpConnectionPtr>::iterator devToConnIt = devToConn_.find(id);
         if(devToConnIt != devToConn_.end())
-            devToConn_.erase(devToConnIt);
+        {
+            if(devToConnIt->second == conn)
+                devToConn_.erase(devToConnIt);
+        }
         connHasDev_.erase(connIt);
     }
 }

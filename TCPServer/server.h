@@ -119,27 +119,28 @@ public:
     {
         MutexLockGuard lock(devConnMutex_);
 
-	map<DEVID, TcpConnectionPtr>::iterator devToConnIt = devToConn_.find(devid);
-        if(devToConnIt != devToConn_.end())
-	{
-	    TcpConnectionPtr conn_tmp = devToConnIt->second;
-	    LOG_DEBUG<<"new conn: "<<((conn_tmp != conn)?true:false);   
-	    if(conn_tmp != conn)
-	    {	  	
-            	//conn_tmp->shutdown();
-		connHasDev_[conn] = devid;
-        	devToConn_[devid] = conn;
-	    }
-            else
-	    {
-		//如果原来的连接和新的连接相等，就不更新 
-	    }
-	}
-	else
-	{
-	    connHasDev_[conn] = devid;
+        map<DEVID, TcpConnectionPtr>::iterator devToConnIt = devToConn_.find(devid);
+            if(devToConnIt != devToConn_.end())
+        {
+            TcpConnectionPtr conn_tmp = devToConnIt->second;
+            LOG_DEBUG<<"new conn: "<<((conn_tmp != conn)?true:false);
+            if(conn_tmp != conn)
+            {
+                conn_tmp->forceClose();
+                connHasDev_[conn] = devid;
+                devToConn_[devid] = conn;
+                LOG_DEBUG<<"new conn saved";
+            }
+                else
+            {
+            //如果原来的连接和新的连接相等，就不更新
+            }
+        }
+        else
+        {
+            connHasDev_[conn] = devid;
             devToConn_[devid] = conn;
-	}
+        }
     }
 
     /***************************************************
