@@ -102,7 +102,7 @@ public:
         if (conn)
         {
             clearConnectionInfo(conn);
-            conn->shutdown();
+            conn->forceClose();
         }
     }
 
