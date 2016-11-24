@@ -178,7 +178,10 @@ void TCPServer::clearConnectionInfo_nodelredis(const weak_ptr<TcpConnection> &we
         //clear map
         map<DEVID, TcpConnectionPtr>::iterator devToConnIt = devToConn_.find(id);
         if(devToConnIt != devToConn_.end())
-            devToConn_.erase(devToConnIt);
+        {
+            if(devToConnIt->second == conn)
+                devToConn_.erase(devToConnIt);
+        }
         connHasDev_.erase(connIt);
     }
 }
