@@ -57,6 +57,7 @@ public:
     void updateStatusDatainRedis(uint64_t DeviceID, uint32_t switchStatus, uint32_t modeStatus, uint32_t timing, uint32_t ver, uint32_t childLock, uint32_t errorReminder, uint32_t totm, uint32_t topur, char* timeStr);
     void updateSensorDatainRedis(uint64_t DeviceID, uint16_t hcho, uint16_t pm2p5, uint16_t temperature, uint16_t humidity, char* timeStr);
     void updateErrorDatainRedis(uint64_t DeviceID, uint32_t fsc, uint32_t ibc, uint32_t ibe, uint32_t uve, char* timeStr);
+    void updateIpDatainRedis(uint64_t DeviceID, char* ipstr, char* timeStr);
 
 private:
 

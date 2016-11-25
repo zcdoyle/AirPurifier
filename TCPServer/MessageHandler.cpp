@@ -51,6 +51,7 @@ void MessageHandler::updateStatusDatainRedis(uint64_t DeviceID, uint32_t switchS
     sprintf(command, "HMSET STATUS%lx switch %d mode %d timing %d ver %d childlock %d errorreminder %d totm %d topur %d time %s",
             DeviceID, switchStatus, modeStatus, timing, ver, childLock, errorReminder, totm, topur, timeStr);
     RedisReply reply((redisReply*)redisCommand(tcpserver_->redisConn_,command));
+    RedisReply replyclu((redisReply*)redisClusterCommand(tcpserver_->redisConnClu_,command));
 }
 
 /*************************************************
@@ -71,6 +72,7 @@ void MessageHandler::updateSensorDatainRedis(uint64_t DeviceID, uint16_t hcho, u
     sprintf(command, "HMSET SENSOR%lx hcho %f pm2p5 %f temperature %f humidity %f time %s",
             DeviceID, hcho / 1.0, pm2p5 / 1.0, temperature / 1.0, humidity / 1.0, timeStr);
     RedisReply reply((redisReply*)redisCommand(tcpserver_->redisConn_,command));
+    RedisReply replyclu((redisReply*)redisClusterCommand(tcpserver_->redisConnClu_,command));
 }
 
 /*************************************************
@@ -91,6 +93,24 @@ void MessageHandler::updateErrorDatainRedis(uint64_t DeviceID, uint32_t fsc, uin
     sprintf(command, "HMSET ERROR%lx fsc %d ibc %d ibe %d uve %d time %s",
             DeviceID, fsc, ibc, ibe, uve, timeStr);
     RedisReply reply((redisReply*)redisCommand(tcpserver_->redisConn_,command));
+    RedisReply replyclu((redisReply*)redisClusterCommand(tcpserver_->redisConnClu_,command));
+}
+
+/*************************************************
+Description:    更新Redis数据库中，dev_ip信息
+Calls:
+Input:          DeviceID: 设备硬件编号
+                ip:设备ip+port
+                time: 采集时间
+Output:         无
+Return:         无
+*************************************************/
+void MessageHandler::updateIpDatainRedis(uint64_t DeviceID, char* ipstr, char* timeStr)
+{
+    char command[256];
+    sprintf(command, "HMSET ADDR%lx ip %s time %s",DeviceID, ipstr, timeStr);
+    RedisReply reply((redisReply*)redisCommand(tcpserver_->redisConn_,command));
+    RedisReply replyclu((redisReply*)redisClusterCommand(tcpserver_->redisConnClu_,command));
 }
 
 /*************************************************
@@ -344,6 +364,13 @@ void MessageHandler::onDevidMessage(const TcpConnectionPtr &conn, shared_ptr<Fra
     DEVID devid = frameHeader->hard;
     tcpserver_->updateConnectionInfo(conn,devid);
 
+    //update ip in rediscluster
+    char ip[100];
+    sprintf(ip,"%s",(conn->localAddress().toIp()).c_str());
+    char timeStr[16];
+    getRedisDateTime(timeStr);
+    updateIpDatainRedis(devid,ip,timeStr);
+
     char devid_m[256];
     sprintf(devid_m, "%lx", devid);
 
@@ -362,6 +389,13 @@ void MessageHandler::onHeartMessage(const TcpConnectionPtr &conn, shared_ptr<Fra
 {
     DEVID devid = frameHeader->hard;
     tcpserver_->updateConnectionInfo(conn,devid);
+
+    //update ip in rediscluster
+    char ip[100];
+    sprintf(ip,"%s",(conn->localAddress().toIp()).c_str());
+    char timeStr[16];
+    getRedisDateTime(timeStr);
+    updateIpDatainRedis(devid,ip,timeStr);
 
     char devid_m[256];
     sprintf(devid_m, "%lx", devid);

@@ -71,14 +71,35 @@ void TCPServer::connectRedis()
 {
     redisConn_  = redisConnect(config_.RedisAddress_,config_.RedisPort_);
     if(redisConn_ != NULL && redisConn_->err)
+    {
         LOG_FATAL << "redis connect error" << redisConn_->errstr;
-
+        return;
+    }
     redisReply *reply;
     reply= (redisReply* )redisCommand(redisConn_, "AUTH %s", config_.RedisPassword_);
     if (reply->type == REDIS_REPLY_ERROR)
         LOG_FATAL << "redis authoricate error" << redisConn_->errstr;
 
     LOG_INFO << "Redis connect successful";
+}
+
+/***************************************************
+Description:    连接Redis cluster数据库
+Calls:          TCPServer::start()
+Input:          无
+Output:         无
+Return:         无
+***************************************************/
+void TCPServer::connectRedisClu()
+{
+    redisConnClu_ = redisClusterConnect("101.200.181.238:6380,101.200.181.238:6381,101.200.184.135:6380,101.200.184.135:6381,123.57.224.166:6380,123.57.224.166:6381",HIRCLUSTER_FLAG_NULL);
+    if(redisConn_ == NULL || redisConn_->err)
+    {
+        LOG_FATAL << "rediscluster connect error" << redisConn_->errstr;
+        return;
+    }
+
+    LOG_INFO << "Rediscluster connect successful";
 }
 
 /***************************************************
@@ -96,6 +117,7 @@ void TCPServer::start()
     jsonMessageServer_.start();
 
     connectRedis();
+    connectRedisClu();
     //rpcClient_.connect(); //TODO:RPCClient
 
 //    Http::post(config_.smsAddress_, config_.smsPort_, config_.smsPage, "msg=TCPServer模块启动 【】");

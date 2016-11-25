@@ -37,7 +37,9 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
 # muduo
 if(NOT MUDUO_PATH)
-    set(MUDUO_PATH "/usr/hao/Third_Party/muduo/${CMAKE_BUILD_TYPE}-install")
+    #set(MUDUO_PATH "/usr/hao/Third_Party/muduo/${CMAKE_BUILD_TYPE}-install")
+    #set(MUDUO_PATH "/home/$ENV{USER}/third_lib/muduo/build/${CMAKE_BUILD_TYPE}-install")
+    set(MUDUO_PATH "/root/installation-package/build/${CMAKE_BUILD_TYPE}-install")
 endif()
 find_path(Muduo_INCLUDE_DIR muduo "${MUDUO_PATH}/include")
 find_path(Muduo_LIBRARY_DIR libmuduo_net.a "${MUDUO_PATH}/lib")

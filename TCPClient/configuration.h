@@ -18,7 +18,7 @@ typedef struct configuration
 
 void readConfiguration(Configuration *config)
 {
-    ifstream configFile("/root/AirPurifier/TCPClient/build/bin/TCPClient.cfg", std::ios::in);
+    ifstream configFile("/mnt/AirPurifier/TCPClient/build/bin/TCPClient.cfg", std::ios::in);
     char *position;
     char line[LINELENGTH];
 

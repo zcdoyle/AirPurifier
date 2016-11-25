@@ -28,6 +28,7 @@ Description：TCP 收发模块
 #include <muduo/net/TcpClient.h>
 #include <muduo/net/protorpc/RpcChannel.h>
 #include <hiredis/hiredis.h>
+#include <hiredis-vip/hircluster.h>
 
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
@@ -168,6 +169,7 @@ public:
 
     Dispatcher dispatcher_;
     redisContext* redisConn_;
+    redisClusterContext* redisConnClu_;
 
 private:
     void onServerConnection(const TcpConnectionPtr& conn);
@@ -175,6 +177,7 @@ private:
     void onMySQLProxyConnection(const TcpConnectionPtr& conn);
     void onHBaseProxyConnection(const TcpConnectionPtr& conn);
     void connectRedis();
+    void connectRedisClu();
     void threadInit(EventLoop* loop);
 
     const Configuration& config_;                               //配置内容
