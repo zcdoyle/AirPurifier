@@ -202,6 +202,7 @@ void TCPServer::clearredis(const weak_ptr<TcpConnection> &weakConn)
         sprintf(command, "HMSET STATUS%lx switch %d", id, -1);
         LOG_DEBUG<<command;
         RedisReply reply_status((redisReply*)redisCommand(redisConn_,command));
+        RedisReply replyclu((redisReply*)redisClusterCommand(redisConnClu_,command));
         LOG_DEBUG<<"clear redis success";
     }
 }
