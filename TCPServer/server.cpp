@@ -156,27 +156,7 @@ void TCPServer::clearConnectionInfo(const weak_ptr<TcpConnection> &weakConn)
     {
         DEVID id = connIt->second;
 
-        //clear redis
-        char command[256];
-
-        sprintf(command, "del STATUS%lx", id);
-        LOG_DEBUG<<command;
-        RedisReply reply_status((redisReply*)redisCommand(redisConn_,command));
-
-        sprintf(command, "del SENSOR%lx", id);
-        LOG_DEBUG<<command;
-        RedisReply reply_sensor((redisReply*)redisCommand(redisConn_,command));
-
-        sprintf(command, "del ERROR%lx", id);
-        LOG_DEBUG<<command;
-        RedisReply reply_error((redisReply*)redisCommand(redisConn_,command));
-
-
         //clear map
-//        map<DEVID, TcpConnectionPtr>::iterator devToConnIt = devToConn_.find(id);
-//        if(devToConnIt != devToConn_.end())
-//            devToConn_.erase(devToConnIt);
-//        connHasDev_.erase(connIt);
         map<DEVID, TcpConnectionPtr>::iterator devToConnIt = devToConn_.find(id);
         if(devToConnIt != devToConn_.end())
         {
@@ -205,6 +185,24 @@ void TCPServer::clearConnectionInfo_nodelredis(const weak_ptr<TcpConnection> &we
                 devToConn_.erase(devToConnIt);
         }
         connHasDev_.erase(connIt);
+    }
+}
+
+void TCPServer::clearredis(const weak_ptr<TcpConnection> &weakConn)
+{
+    //清除redis连接信息
+    TcpConnectionPtr conn(weakConn.lock());
+    map<TcpConnectionPtr, DEVID>::iterator connIt = connHasDev_.find(conn);
+    if(connIt != connHasDev_.end())
+    {
+        DEVID id = connIt->second;
+
+        //clear redis
+        char command[256];
+        sprintf(command, "HMSET STATUS%lx switch %d", id, -1);
+        LOG_DEBUG<<command;
+        RedisReply reply_status((redisReply*)redisCommand(redisConn_,command));
+        LOG_DEBUG<<"clear redis success";
     }
 }
 
