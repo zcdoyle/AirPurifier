@@ -142,7 +142,7 @@ void TCPServer::onServerConnection(const TcpConnectionPtr& conn)
     else
     {
         weak_ptr<TcpConnection> weakTcpPtr(conn);
-        clearConnectionInfo_nodelredis(weakTcpPtr);
+        //clearConnectionInfo_nodelredis(weakTcpPtr);
     }
 }
 
