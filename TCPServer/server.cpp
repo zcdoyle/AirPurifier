@@ -142,32 +142,11 @@ void TCPServer::onServerConnection(const TcpConnectionPtr& conn)
     else
     {
         weak_ptr<TcpConnection> weakTcpPtr(conn);
-        //clearConnectionInfo_nodelredis(weakTcpPtr);
+        //clearConnectionInfo(weakTcpPtr);
     }
 }
 
 void TCPServer::clearConnectionInfo(const weak_ptr<TcpConnection> &weakConn)
-{
-    //清除连接信息
-    TcpConnectionPtr conn(weakConn.lock());
-    MutexLockGuard lock(devConnMutex_);
-    map<TcpConnectionPtr, DEVID>::iterator connIt = connHasDev_.find(conn);
-    if(connIt != connHasDev_.end())
-    {
-        DEVID id = connIt->second;
-
-        //clear map
-        map<DEVID, TcpConnectionPtr>::iterator devToConnIt = devToConn_.find(id);
-        if(devToConnIt != devToConn_.end())
-        {
-            if(devToConnIt->second == conn)
-                devToConn_.erase(devToConnIt);
-        }
-        connHasDev_.erase(connIt);
-    }
-}
-
-void TCPServer::clearConnectionInfo_nodelredis(const weak_ptr<TcpConnection> &weakConn)
 {
     //清除连接信息
     TcpConnectionPtr conn(weakConn.lock());

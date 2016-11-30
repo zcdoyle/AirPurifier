@@ -59,7 +59,7 @@ bool Dispatcher::cancelTimer(DEVID devid, FRAMECOUNT count)
     char devid_m[256];
     sprintf(devid_m, "%lx", devid);
     LOG_DEBUG << "DEVID: " << devid_m <<
-                 "seq: " << count;
+                 " seq: " << count;
 
     //查找对应元素的迭代器
     MutexLockGuard lock(confirmMutex_);
