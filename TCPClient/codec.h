@@ -398,7 +398,7 @@ private:
         LOG_DEBUG<<frameHeader->seq;
         memcpy(message, &frameMessage, 2);
         uint16_t ConfirmFrameLength = HeaderLength + 2;
-        send(conn, ConfirmFrameLength, CONFIRM, message, dev_id++);
+        send(conn, ConfirmFrameLength, CONFIRM, message, dev_id);
     }
 
 
