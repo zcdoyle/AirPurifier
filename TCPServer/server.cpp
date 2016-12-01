@@ -52,9 +52,9 @@ TCPServer::TCPServer(EventLoop* loop, const Configuration &config)
     jsonMessageServer_.setMessageCallback(bind(&JsonCodec::onMessage, &jsonCodec_, _1, _2, _3));
 
     //设置各类处理信息的回调函数,派发器利用这些回调函数分发不同消息
-    dispatcher_.setCallbacks(bind(&MessageHandler::onStatusMessage, &messageHandler_, _1, _2),
-                             bind(&MessageHandler::onSensorMessage, &messageHandler_, _1, _2),
-                             bind(&MessageHandler::onErrorMessage, &messageHandler_, _1, _2),
+    dispatcher_.setCallbacks(bind(&MessageHandler::onStatusMessage, &messageHandler_, _1, _2, _3),
+                             bind(&MessageHandler::onSensorMessage, &messageHandler_, _1, _2, _3),
+                             bind(&MessageHandler::onErrorMessage, &messageHandler_, _1, _2, _3),
                              bind(&MessageHandler::onDevidMessage, &messageHandler_, _1, _2),
                              bind(&MessageHandler::onHeartMessage, &messageHandler_, _1, _2));
 
@@ -141,7 +141,7 @@ void TCPServer::onServerConnection(const TcpConnectionPtr& conn)
     }
     else
     {
-        weak_ptr<TcpConnection> weakTcpPtr(conn);
+        //weak_ptr<TcpConnection> weakTcpPtr(conn);
         //clearConnectionInfo(weakTcpPtr);
     }
 }

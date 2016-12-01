@@ -239,7 +239,7 @@ Return:         无
 void Dispatcher::statusMessage(const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char>& message)
 {
     //sendConfirmFrame(conn, frameHeader); //return confirm frame
-    statusCallback_(frameHeader, message); // messageHandler communicate with sql
+    statusCallback_(conn, frameHeader, message); // messageHandler communicate with sql
 }
 
 /*************************************************
@@ -254,13 +254,13 @@ Return:         无
 void Dispatcher::sensorMessage(const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char>& message)
 {
     //sendConfirmFrame(conn, frameHeader);
-    sensorCallback_(frameHeader, message);
+    sensorCallback_(conn, frameHeader, message);
 }
 
 void Dispatcher::errorMessage(const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char>& message)
 {
     //sendConfirmFrame(conn, frameHeader);
-    errorCallback_(frameHeader, message);
+    errorCallback_(conn, frameHeader, message);
 }
 
 void Dispatcher::devidMessage(const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader)

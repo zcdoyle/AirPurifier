@@ -41,8 +41,8 @@ const static int RETRY_NUMBER = 3;
 class Dispatcher : boost::noncopyable
 {
 public:
-    typedef function<void (shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char>& message)> MessageCallback;
-    typedef function<void (const TcpConnectionPtr&conn, shared_ptr<FrameHeader>& frameHeader)> DevIDCallback;
+    typedef function<void (const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char>& message)> MessageCallback;
+    typedef function<void (const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader)> DevIDCallback;
 
     /*************************************************
     Description:    Dispatcher构造函数，设置时间循环和编码解码
@@ -69,7 +69,7 @@ public:
         sensorCallback_ = sensorCb;
         errorCallback_ = errorCb;
         devidCallback_ = devidCb;
-	heartCallback_ = heartCb;
+        heartCallback_ = heartCb;
     }
 
     /*************************************************
