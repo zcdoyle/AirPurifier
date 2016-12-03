@@ -202,7 +202,7 @@ void MessageHandler::onStatusMessage(const TcpConnectionPtr& conn, shared_ptr<Fr
     memcpy(&msg, get_pointer(message), sizeof(msg));
 
     senId = frameHeader->hard;
-    tcpserver_->updateConnectionInfo(conn,senId);
+    //tcpserver_->updateConnectionInfo(conn,senId);
 
     isopen = msg.content.status.isopen;
     mode = msg.content.status.mode;
@@ -266,7 +266,7 @@ void MessageHandler::onSensorMessage(const TcpConnectionPtr& conn, shared_ptr<Fr
     memcpy(&msg, get_pointer(message), sizeof(msg));
 
     senId = frameHeader->hard;
-    tcpserver_->updateConnectionInfo(conn,senId);
+    //tcpserver_->updateConnectionInfo(conn,senId);
 
     hcho = msg.content.sensor.hcho;
     pm2p5 = msg.content.sensor.pm;
@@ -318,7 +318,7 @@ void MessageHandler::onErrorMessage(const TcpConnectionPtr& conn, shared_ptr<Fra
     memcpy(&msg, get_pointer(message), sizeof(msg));
 
     senId = frameHeader->hard;
-    tcpserver_->updateConnectionInfo(conn,senId);
+    //tcpserver_->updateConnectionInfo(conn,senId);
 
     fsc = msg.content.error.fsc;
     ibc = msg.content.error.ibc;
