@@ -36,7 +36,7 @@ public:
         client_.setConnectionCallback(bind(&TimerClient::onConnection, this, _1));
         client_.setConnectionCallback(bind(&TimerClient::onConnection, this, _1));
         client_.setMessageCallback(bind(&TCPCodec::onMessage, &codec_, _1, _2, _3));
-        client_.enableRetry();
+        //client_.enableRetry();
     }
 
     void connect()
@@ -62,7 +62,7 @@ private:
         }
         else
         {
-            connection_.reset();
+            //connection_.reset();
         }
     }
 
