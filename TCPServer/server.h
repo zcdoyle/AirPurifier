@@ -103,7 +103,7 @@ public:
         if (conn)
         {
             clearredis(conn);
-            clearConnectionInfo(conn);
+            //clearConnectionInfo(conn);
             conn->forceClose();
         }
     }

@@ -141,8 +141,8 @@ void TCPServer::onServerConnection(const TcpConnectionPtr& conn)
     }
     else
     {
-        //weak_ptr<TcpConnection> weakTcpPtr(conn);
-        //clearConnectionInfo(weakTcpPtr);
+        weak_ptr<TcpConnection> weakTcpPtr(conn);
+        clearConnectionInfo(weakTcpPtr);
     }
 }
 
