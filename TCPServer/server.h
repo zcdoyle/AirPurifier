@@ -102,8 +102,8 @@ public:
             return;
         if (conn)
         {
-            clearredis(weakConn);
-            clearConnectionInfo(weakConn);
+            clearredis(conn);
+            //clearConnectionInfo(weakConn);
             conn->forceClose();
         }
     }
