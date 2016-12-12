@@ -193,7 +193,7 @@ Input:          frameHeader: 帧头指针
 Output:         无
 Return:         无
 *************************************************/
-void MessageHandler::onStatusMessage(const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char> message)
+void MessageHandler::onStatusMessage(shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char> message)
 {
     uint32_t isopen,mode,click,ermd,time,ver; //帧中包含的状态
     uint32_t totm,topur;
@@ -202,7 +202,6 @@ void MessageHandler::onStatusMessage(const TcpConnectionPtr& conn, shared_ptr<Fr
     memcpy(&msg, get_pointer(message), sizeof(msg));
 
     senId = frameHeader->hard;
-    //tcpserver_->updateConnectionInfo(conn,senId);
 
     isopen = msg.content.status.isopen;
     mode = msg.content.status.mode;
@@ -258,7 +257,7 @@ Input:          frameHeader: 帧头指针
 Output:         无
 Return:         无
 *************************************************/
-void MessageHandler::onSensorMessage(const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char> message)
+void MessageHandler::onSensorMessage(shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char> message)
 {
     uint16_t hcho, pm2p5, temperature, humidity;
     DEVID senId;
@@ -266,7 +265,6 @@ void MessageHandler::onSensorMessage(const TcpConnectionPtr& conn, shared_ptr<Fr
     memcpy(&msg, get_pointer(message), sizeof(msg));
 
     senId = frameHeader->hard;
-    //tcpserver_->updateConnectionInfo(conn,senId);
 
     hcho = msg.content.sensor.hcho;
     pm2p5 = msg.content.sensor.pm;
@@ -310,7 +308,7 @@ Input:          frameHeader: 帧头指针
 Output:         无
 Return:         无
 *************************************************/
-void MessageHandler::onErrorMessage(const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char> message)
+void MessageHandler::onErrorMessage(shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char> message)
 {
     uint32_t fsc, ibc, ibe, uve;
     DEVID senId;
@@ -318,7 +316,6 @@ void MessageHandler::onErrorMessage(const TcpConnectionPtr& conn, shared_ptr<Fra
     memcpy(&msg, get_pointer(message), sizeof(msg));
 
     senId = frameHeader->hard;
-    //tcpserver_->updateConnectionInfo(conn,senId);
 
     fsc = msg.content.error.fsc;
     ibc = msg.content.error.ibc;

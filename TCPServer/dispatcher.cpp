@@ -59,7 +59,7 @@ bool Dispatcher::cancelTimer(DEVID devid, FRAMECOUNT count)
     char devid_m[256];
     sprintf(devid_m, "%lx", devid);
     LOG_DEBUG << "DEVID: " << devid_m <<
-                 " seq: " << count;
+                 "seq: " << count;
 
     //查找对应元素的迭代器
     MutexLockGuard lock(confirmMutex_);
@@ -239,7 +239,7 @@ Return:         无
 void Dispatcher::statusMessage(const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char>& message)
 {
     //sendConfirmFrame(conn, frameHeader); //return confirm frame
-    statusCallback_(conn, frameHeader, message); // messageHandler communicate with sql
+    statusCallback_(frameHeader, message); // messageHandler communicate with sql
 }
 
 /*************************************************
@@ -254,13 +254,13 @@ Return:         无
 void Dispatcher::sensorMessage(const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char>& message)
 {
     //sendConfirmFrame(conn, frameHeader);
-    sensorCallback_(conn, frameHeader, message);
+    sensorCallback_(frameHeader, message);
 }
 
 void Dispatcher::errorMessage(const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char>& message)
 {
     //sendConfirmFrame(conn, frameHeader);
-    errorCallback_(conn, frameHeader, message);
+    errorCallback_(frameHeader, message);
 }
 
 void Dispatcher::devidMessage(const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader)

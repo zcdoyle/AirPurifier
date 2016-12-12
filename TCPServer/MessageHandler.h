@@ -48,11 +48,11 @@ public:
         tcpserver_(tcpserver),
         rpcClient_(rpcClient) {}
 
-    void onStatusMessage(const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char> message);
-    void onSensorMessage(const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char> message);
-    void onErrorMessage(const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char> message);
-    void onDevidMessage(const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader);
-    void onHeartMessage(const TcpConnectionPtr& conn, shared_ptr<FrameHeader>& frameHeader);
+    void onStatusMessage(shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char> message);
+    void onSensorMessage(shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char> message);
+    void onErrorMessage(shared_ptr<FrameHeader>& frameHeader, shared_ptr<u_char> message);
+    void onDevidMessage(const TcpConnectionPtr&conn, shared_ptr<FrameHeader>& frameHeader);
+    void onHeartMessage(const TcpConnectionPtr&conn, shared_ptr<FrameHeader>& frameHeader);
 
     void updateStatusDatainRedis(uint64_t DeviceID, uint32_t switchStatus, uint32_t modeStatus, uint32_t timing, uint32_t ver, uint32_t childLock, uint32_t errorReminder, uint32_t totm, uint32_t topur, char* timeStr);
     void updateSensorDatainRedis(uint64_t DeviceID, uint16_t hcho, uint16_t pm2p5, uint16_t temperature, uint16_t humidity, char* timeStr);

@@ -103,7 +103,6 @@ public:
         if (conn)
         {
             clearredis(conn);
-            //clearConnectionInfo(conn);
             conn->forceClose();
         }
     }
@@ -128,7 +127,7 @@ public:
             LOG_DEBUG<<"new conn: "<<((conn_tmp != conn)?true:false);
             if(conn_tmp != conn)
             {
-                conn_tmp->forceClose();
+                //conn_tmp->forceClose();
                 connHasDev_[conn] = devid;
                 devToConn_[devid] = conn;
                 LOG_DEBUG<<"new conn saved";
@@ -166,6 +165,7 @@ public:
             devToConn_[devid] = conn;
     }*/
     void clearConnectionInfo(const weak_ptr<TcpConnection> &weakConn);
+    void clearConnectionInfo_nodelredis(const weak_ptr<TcpConnection> &weakConn);
     void clearredis(const weak_ptr<TcpConnection> &weakConn);
 
     Dispatcher dispatcher_;

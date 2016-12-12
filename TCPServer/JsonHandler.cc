@@ -86,11 +86,11 @@ void JsonHandler::updateStatusErrorDatainRedis(DEVID DeviceID, uint32_t val, cha
     LOG_DEBUG<<command;
     RedisReply reply((redisReply*)redisCommand(tcpServer_->redisConn_,command));
 }
-void JsonHandler::clearRedis(DEVID devid)
+void JsonHandler::clearRedis(DEVID DeviceID)
 {
     //clear redis
     char command[256];
-    sprintf(command, "HMSET STATUS%lx switch %d", devid, -1);
+    sprintf(command, "HMSET STATUS%lx switch %d", DeviceID, -1);
     LOG_DEBUG<<command;
     RedisReply reply_status((redisReply*)redisCommand(tcpServer_->redisConn_,command));
     RedisReply replyclu((redisReply*)redisClusterCommand(tcpServer_->redisConnClu_,command));
@@ -151,7 +151,6 @@ bool JsonHandler::getConnbyDevID(const TcpConnectionPtr& jsonConn, TcpConnection
     if(get_pointer(conn) == NULL)
     {
         LOG_INFO << "no connection found";
-        clearRedis(devid);
         returnJsonResult(jsonConn, false, "device not connected to server");
         return false;
     }

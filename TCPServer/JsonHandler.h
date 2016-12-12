@@ -41,7 +41,7 @@ public:
     void updateStatusTimingDatainRedis(uint64_t DeviceID, uint32_t val, char* timeStr);
     void updateStatusChildDatainRedis(uint64_t DeviceID, uint32_t val, char* timeStr);
     void updateStatusErrorDatainRedis(uint64_t DeviceID, uint32_t val, char* timeStr);
-    void clearRedis(DEVID devid);
+    void clearRedis(DEVID DeviceID);
 
 private:
     /*************************************************
