@@ -103,7 +103,7 @@ public:
         if (conn)
         {
             clearredis(conn);
-            //clearConnectionInfo(weakConn);
+            //clearConnectionInfo(conn);
             conn->forceClose();
         }
     }
@@ -166,7 +166,6 @@ public:
             devToConn_[devid] = conn;
     }*/
     void clearConnectionInfo(const weak_ptr<TcpConnection> &weakConn);
-    void clearConnectionInfo_nodeldev(const weak_ptr<TcpConnection> &weakConn);
     void clearredis(const weak_ptr<TcpConnection> &weakConn);
 
     Dispatcher dispatcher_;
