@@ -127,7 +127,7 @@ public:
             LOG_DEBUG<<"new conn: "<<((conn_tmp != conn)?true:false);
             if(conn_tmp != conn)
             {
-                //conn_tmp->forceClose();
+                conn_tmp->forceClose();
                 connHasDev_[conn] = devid;
                 devToConn_[devid] = conn;
                 LOG_DEBUG<<"new conn saved";
