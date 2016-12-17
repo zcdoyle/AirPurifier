@@ -151,6 +151,7 @@ bool JsonHandler::getConnbyDevID(const TcpConnectionPtr& jsonConn, TcpConnection
     if(get_pointer(conn) == NULL)
     {
         LOG_INFO << "no connection found";
+        clearRedis(devid);
         returnJsonResult(jsonConn, false, "device not connected to server");
         return false;
     }
