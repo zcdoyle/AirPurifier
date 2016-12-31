@@ -212,23 +212,23 @@ void MessageHandler::onStatusMessage(shared_ptr<FrameHeader>& frameHeader, share
     totm = msg.content.status.totm;
     topur = msg.content.status.topur;
 
-//     uint16_t wHbase = random(10);
-//     if(wHbase == 1)
-//     {
-//        ProtoMessage protoMessage;
-//        initializeHBaseProto(protoMessage, STATUS_MSG, senId);
-//        protoMessage.set_devid(senId);
-//        ProtoMessage_Status* status = protoMessage.mutable_status();
-//        status->set_open(isopen);
-//        status->set_mode(mode);
-//        status->set_click(click);
-//        status->set_ermd(ermd);
-//        status->set_time(time);
-//        status->set_ver(ver);
-//        status->set_totm(totm);
-//        status->set_topur(topur);
-//        tcpserver_->sendProtoMessage(protoMessage, HBase);
-//     }
+     uint16_t wHbase = random(10);
+     if(wHbase == 1)
+     {
+        ProtoMessage protoMessage;
+        initializeHBaseProto(protoMessage, STATUS_MSG, senId);
+        protoMessage.set_devid(senId);
+        ProtoMessage_Status* status = protoMessage.mutable_status();
+        status->set_open(isopen);
+        status->set_mode(mode);
+        status->set_click(click);
+        status->set_ermd(ermd);
+        status->set_time(time);
+        status->set_ver(ver);
+        status->set_totm(totm);
+        status->set_topur(topur);
+        tcpserver_->sendProtoMessage(protoMessage, HBase);
+     }
 
     //在Redis更新设备状态信息
     char timeStr[16];
@@ -271,20 +271,20 @@ void MessageHandler::onSensorMessage(shared_ptr<FrameHeader>& frameHeader, share
     temperature = msg.content.sensor.temp;
     humidity = msg.content.sensor.humi;
 
-//     uint16_t wHbase = random(10);
-//     if(wHbase == 1)
-//     {
-//        ProtoMessage protoMessage;
-//        initializeHBaseProto(protoMessage, SENSOR_MSG, senId);
+     uint16_t wHbase = random(10);
+     if(wHbase == 1)
+     {
+        ProtoMessage protoMessage;
+        initializeHBaseProto(protoMessage, SENSOR_MSG, senId);
 
-//        protoMessage.set_devid(senId);
-//        ProtoMessage_Sensor* sensor = protoMessage.mutable_sensor();
-//        sensor->set_hcho(hcho / 1.0);
-//        sensor->set_pm2p5(pm2p5 / 1.0);
-//        sensor->set_temperature(temperature / 1.0);
-//        sensor->set_humidity(humidity / 1.0);
-//        tcpserver_->sendProtoMessage(protoMessage, HBase);
-//     }
+        protoMessage.set_devid(senId);
+        ProtoMessage_Sensor* sensor = protoMessage.mutable_sensor();
+        sensor->set_hcho(hcho / 1.0);
+        sensor->set_pm2p5(pm2p5 / 1.0);
+        sensor->set_temperature(temperature / 1.0);
+        sensor->set_humidity(humidity / 1.0);
+        tcpserver_->sendProtoMessage(protoMessage, HBase);
+     }
 
     //在Redis更新设备信息
     char timeStr[16];
@@ -322,20 +322,20 @@ void MessageHandler::onErrorMessage(shared_ptr<FrameHeader>& frameHeader, shared
     ibe = msg.content.error.ibe;
     uve = msg.content.error.uve;
 
-//     uint16_t wHbase = random(10);
-//     if(wHbase == 1)
-//     {
-//        ProtoMessage protoMessage;
-//        initializeHBaseProto(protoMessage, ERROR_MSG, senId);
+     uint16_t wHbase = random(10);
+     if(wHbase == 1)
+     {
+        ProtoMessage protoMessage;
+        initializeHBaseProto(protoMessage, ERROR_MSG, senId);
 
-//        protoMessage.set_devid(senId);
-//        ProtoMessage_Error* error = protoMessage.mutable_error();
-//        error->set_fsc(fsc);
-//        error->set_ibc(ibc);
-//        error->set_ibe(ibe);
-//        error->set_uve(uve);
-//        tcpserver_->sendProtoMessage(protoMessage, HBase);
-//     }
+        protoMessage.set_devid(senId);
+        ProtoMessage_Error* error = protoMessage.mutable_error();
+        error->set_fsc(fsc);
+        error->set_ibc(ibc);
+        error->set_ibe(ibe);
+        error->set_uve(uve);
+        tcpserver_->sendProtoMessage(protoMessage, HBase);
+     }
 
     //在Redis更新设备信息
     char timeStr[16];

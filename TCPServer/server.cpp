@@ -306,14 +306,14 @@ void TCPServer::threadInit(EventLoop* loop)
 //    UnSendMessages::instance()[MySQL].clear();
 
 //    //连接Hbase代理服务器
-//    TcpClientPtr hbaseProxyPtr(new TcpClient(loop, InetAddress(config_.HBaseProxyAddress_, config_.HBaseProxyPort_), "HBaseProxy"));
-//    LocalClients::instance()[HBase] = hbaseProxyPtr;
-//    hbaseProxyPtr->setConnectionCallback(
-//            bind(&TCPServer::onHBaseProxyConnection, this, _1));
-//    hbaseProxyPtr->enableRetry();
-//    hbaseProxyPtr->connect();
-//    UnSendMessages::instance()[HBase].clear();
-//    LOG_INFO << "Thread init succssful";
+    TcpClientPtr hbaseProxyPtr(new TcpClient(loop, InetAddress(config_.HBaseProxyAddress_, config_.HBaseProxyPort_), "HBaseProxy"));
+    LocalClients::instance()[HBase] = hbaseProxyPtr;
+    hbaseProxyPtr->setConnectionCallback(
+            bind(&TCPServer::onHBaseProxyConnection, this, _1));
+    hbaseProxyPtr->enableRetry();
+    hbaseProxyPtr->connect();
+    UnSendMessages::instance()[HBase].clear();
+    LOG_INFO << "Thread init succssful";
 }
 
 
