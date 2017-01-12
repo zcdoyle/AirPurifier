@@ -53,7 +53,7 @@ void TCPCodec::onMessage(const TcpConnectionPtr& conn, Buffer *buf, Timestamp re
         else if(buf->readableBytes() >= (uint16_t)length)
         {
             //帧信息字
-            LOG_DEBUG<<"length: "<<length;
+            //LOG_DEBUG<<"length: "<<length;
             shared_ptr<u_char > message((u_char *)malloc(length - HeaderLength));
             memcpy(get_pointer(message), (u_char *)data + HeaderLength, length - HeaderLength);
 
@@ -203,7 +203,7 @@ void TCPCodec::printFrame(std::string tag,FrameHeader *frameHeader, u_char* mess
         sprintf(messageLineh, "%02x ", header[i]);
         messh.append(messageLineh);
     }
-    LOG_DEBUG << messh;
+    //LOG_DEBUG << messh;
 
     std::string mess = tag;
     mess += " Message: ";
@@ -214,8 +214,8 @@ void TCPCodec::printFrame(std::string tag,FrameHeader *frameHeader, u_char* mess
         mess.append(messageLine);
     }
 
-    LOG_DEBUG << headerLine;
-    LOG_DEBUG << mess;
+    //LOG_DEBUG << headerLine;
+    //LOG_DEBUG << mess;
 }
 
 
