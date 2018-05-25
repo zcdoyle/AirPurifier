@@ -237,15 +237,15 @@ void MessageHandler::onStatusMessage(shared_ptr<FrameHeader>& frameHeader, share
 
     char devid_m[256];
     sprintf(devid_m, "%lx", senId);
-//    LOG_DEBUG <<"STATUS: " << devid_m <<
-//                " isopen: " << isopen <<
-//                " mode: " << mode <<
-//                " click: " << click <<
-//                " ermd: " << ermd <<
-//                " time: " << time <<
-//                " ver: " << ver <<
-//                " totm: " << totm <<
-//                " topur: " << topur;
+    LOG_DEBUG <<"STATUS: " << devid_m <<
+                " isopen: " << isopen <<
+                " mode: " << mode <<
+                " click: " << click <<
+                " ermd: " << ermd <<
+                " time: " << time <<
+                " ver: " << ver <<
+                " totm: " << totm <<
+                " topur: " << topur;
 
 }
 
@@ -293,11 +293,11 @@ void MessageHandler::onSensorMessage(shared_ptr<FrameHeader>& frameHeader, share
 
     char devid_m[256];
     sprintf(devid_m, "%lx", senId);
-//    LOG_DEBUG << "Sensor: " << devid_m <<
-//                " hcho: " << hcho / 1.0 <<
-//                " pm2.5 " << pm2p5 / 1.0 <<
-//                " temperatur: " << temperature / 1.0 <<
-//                " humidity: " << humidity / 1.0;
+    LOG_DEBUG << "Sensor: " << devid_m <<
+                " hcho: " << hcho / 1.0 <<
+                " pm2.5 " << pm2p5 / 1.0 <<
+                " temperatur: " << temperature / 1.0 <<
+                " humidity: " << humidity / 1.0;
 }
 
 /*************************************************
